@@ -12,4 +12,11 @@ class SinglePostLoadedEvent extends PostsEvent {
   });
 }
 
+class PostPostedEvent extends PostsEvent {
+  final Post post;
+  PostPostedEvent({
+    required this.post,
+  });
+}
+
 class PullToRefreshEvent extends PostsEvent {}

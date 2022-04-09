@@ -39,4 +39,23 @@ class PostGateway {
       throw Exception('Failed to load album');
     }
   }
+
+  Future postPost(Post post) async {
+    final postURL = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+
+    try {
+      final result = await http.post(
+        postURL,
+        body: {
+          "userId": post.userId.toString(),
+          "title": post.title,
+          "body": post.body,
+        },
+      );
+
+      return json.decode(result.body);
+    } catch (e) {
+      return {'message': e};
+    }
+  }
 }

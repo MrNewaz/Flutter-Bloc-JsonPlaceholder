@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_placeholder/gateway/post_gateway.dart';
@@ -22,6 +24,14 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       emit(state.copyWith(
         status: PostStatus.loaded,
         posts: posts,
+      ));
+    });
+    on<PostPostedEvent>((event, emit) async {
+      final posts = await _postGateway.postPost(event.post);
+      print('Bloc: $posts');
+      emit(state.copyWith(
+        status: PostStatus.loaded,
+        posted: jsonEncode(posts),
       ));
     });
   }

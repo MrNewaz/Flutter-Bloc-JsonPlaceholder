@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_placeholder/bloc/posts_bloc.dart';
+import 'package:json_placeholder/models/post.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,6 +11,23 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              context.read<PostsBloc>().add(
+                    PostPostedEvent(
+                      post: Post(
+                        userId: 1,
+                        id: 2,
+                        title: 'title',
+                        body: 'body',
+                      ),
+                    ),
+                  );
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<PostsBloc, PostsState>(
         builder: (context, state) {
