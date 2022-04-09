@@ -3,6 +3,13 @@ part of 'posts_bloc.dart';
 @immutable
 abstract class PostsEvent {}
 
-class LoadEvent extends PostsEvent {}
+class AllPostLoadedEvent extends PostsEvent {}
+
+class SinglePostLoadedEvent extends PostsEvent {
+  final String id;
+  SinglePostLoadedEvent({
+    required this.id,
+  });
+}
 
 class PullToRefreshEvent extends PostsEvent {}

@@ -13,12 +13,13 @@ class HomePage extends StatelessWidget {
       ),
       body: BlocBuilder<PostsBloc, PostsState>(
         builder: (context, state) {
-          if (state is LoadedState) {
-            return RefreshIndicator(
-              onRefresh: () async => context.read<PostsBloc>().add(
-                    PullToRefreshEvent(),
-                  ),
-              child: ListView.builder(
+          switch (state.status) {
+            case PostStatus.loading:
+              return const Center(child: CircularProgressIndicator());
+            case PostStatus.error:
+              return const Center(child: Text('Error'));
+            case PostStatus.loaded:
+              return ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: 10,
                 itemBuilder: (BuildContext context, int index) {
@@ -35,17 +36,8 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-              ),
-            );
-          } else if (state is FailedToLoadState) {
-            return Center(
-              child: Text(state.error),
-            );
+              );
           }
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
         },
       ),
     );

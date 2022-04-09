@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider<PostsBloc>(
-        create: (context) => PostsBloc()..add(LoadEvent()),
+        create: (context) => PostsBloc()..add(AllPostLoadedEvent()),
         child: const HomePage(),
       ),
     );
